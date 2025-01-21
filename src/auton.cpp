@@ -14,7 +14,43 @@ void redAuton(){
 
 }
 
+void redAWP(){
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+    chassis.setPose(-60,-14,0);
+    chassis.moveToPoint(-60, 0, 1000,{},false);
+    chassis.turnToHeading(90, 1000,{},false);
+    ConveyorMotor.move(127);
+    IntakeMotor.move(127);
+    pros::delay(500);
+    chassis.moveToPoint(-45.5, 0, 1500,{},true);
+    pros::delay(750);
+    IntakeMotor.move(0);
+    ConveyorMotor.move(0);
+    chassis.turnToHeading(135,1000,{},false);
+    chassis.moveToPoint(-26.366, -23.859, 1500,{.forwards=false,.maxSpeed=50},false);
+    mogoMech.set_value(true);
+
+    IntakeMotor.move(127);
+    ConveyorMotor.move(127);
+
+    chassis.turnToHeading(180, 1000,{},false);
+    chassis.moveToPoint(-23.595,-45.853,1500,{},false);
+    pros::delay(400);
+    IntakeMotor.move(0);
+    ConveyorMotor.move(0);
+    chassis.turnToHeading(10, 1000,{},false);
+    chassis.moveToPoint(-12.165, -12.45, 1500,{},false);
+
+    
+    
+
+
+}
+
 void blueAuton(){
+
+}
+void blueAWP(){
 
 }
 
@@ -240,10 +276,10 @@ void skills(){
 
 }
 
-void (*autonFunctions[])() = {redAuton, blueAuton, skills};
+void (*autonFunctions[])() = {redAuton, redAWP, blueAuton,blueAWP, skills};
 
 int autonSelect = 1;
-std::string autonNames[5] = {"redAuton", "blueAuton", "skills"};
+std::string autonNames[5] = {"redAuton","redAWP", "blueAuton","blueAWP", "skills"};
 
 void previousAuton() {
   if (autonSelect == 0) {
