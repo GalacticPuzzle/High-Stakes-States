@@ -7,6 +7,8 @@
 #include "pros/misc.h"
 #include "pros/rtos.hpp"
 #include "../include/subsystems/lb.hpp"
+#include "../include/subsystems/auton.hpp"
+
 
 
 
@@ -31,13 +33,16 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 
 void initialize() {
-	pros::lcd::initialize(); // initialize brain screen
+    pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate();
+    pros::delay(5000); //give time for imu to calibrate
+    pros::lcd::set_text(0, "Auton Selected = " + autonNames[autonSelect]);
+
+    pros::lcd::register_btn0_cb(previousAuton);
+    pros::lcd::register_btn2_cb(nextAuton);
 
 
     // chassis.calibrate(); // calibrate sensors
-    IntakeMotor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
 
 /**

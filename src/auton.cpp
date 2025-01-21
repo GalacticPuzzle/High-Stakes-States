@@ -1,0 +1,148 @@
+#include "main.h"// IWYU pragma: keep
+#include "lemlib/api.hpp" // IWYU pragma: keep
+#include "../include/subsystems/drive.hpp"
+#include "../include/subsystems/initbot.hpp"
+#include "../include/subsystems/intake.hpp"
+#include "../include/subsystems/air.hpp"
+#include "pros/rtos.hpp"
+#include "../include/subsystems/lb.hpp"
+#include "../include/subsystems/auton.hpp"
+
+
+void redAuton(){
+
+}
+
+void blueAuton(){
+
+}
+
+void skills(){
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE); 
+
+    // JERRY PATH PRAY IT WORKS PLSPLSPLSPLSLSSLPSLS
+    //SKILLS PROG!
+    chassis.setPose(-62, 0,90);
+    IntakeMotor.move(127);
+    ConveyorMotor.move(127);
+    pros::delay(1000);
+    IntakeMotor.move(0);
+    ConveyorMotor.move(0);
+    //Scored on alliance stake
+    chassis.moveToPoint(-47.538,-0.252, 1000);
+    chassis.waitUntilDone();
+    chassis.turnToPoint(-58.8, -19.5, 1000, {.forwards = false});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-58.8,-19.5, 1500,{.forwards = false, .maxSpeed = 40});
+    chassis.waitUntilDone();
+    mogoMech.set_value(true);
+    chassis.waitUntilDone();
+    pros::delay(750);
+
+    // //Clamped first mogo
+    chassis.turnToPoint(-23, -23.45, 1000);
+     IntakeMotor.move(127);
+    ConveyorMotor.move(127);
+    chassis.moveToPoint(-23, -23.45, 2500, {.maxSpeed = 70});
+    chassis.waitUntilDone();
+    pros::delay(150);
+    //second ring
+    chassis.turnToPoint(-26.356, -50.416, 1000);
+    chassis.moveToPoint(-26.356, -50.416, 2500, {.maxSpeed = 70});
+    chassis.waitUntilDone();
+    pros::delay(150);
+    chassis.turnToPoint(-52.082, -46.6, 1000);
+    chassis.moveToPoint(-52.082, -46.6, 1500);
+    chassis.waitUntilDone();
+    chassis.turnToPoint(-68.4, -46.9, 1000);
+    chassis.moveToPoint(-68.4, -46.9, 1500);
+    chassis.turnToPoint(-44.02 , -64.036, 1000);
+    chassis.moveToPoint(-44.02 , -64.036, 1500);
+    chassis.waitUntilDone();
+    pros::delay(300);
+    IntakeMotor.move(0);
+    ConveyorMotor.move(0);
+    chassis.turnToPoint(-67.954,-64.567,1000,{.forwards=false});
+    chassis.moveToPoint(-67.954, -64.567, 2000,{.forwards=false});
+    mogoMech.set_value(false);
+    // chassis.turnToPoint(-59.397,-59.018, 750);
+    // chassis.moveToPoint(-59.397, -59.018, 500);
+    // chassis.moveToPoint(-67.954, -64.567, 1000,{.forwards=false});
+    chassis.turnToPoint(-47.038, -46.66, 1500);
+    chassis.moveToPoint(-47.038, -46.66, 1500);
+
+    chassis.turnToPoint(-47.29, 23.96, 2500, {.forwards=false});
+    chassis.moveToPoint(-47.29, 23.96, 3500,{.forwards=false, .maxSpeed=60});
+    chassis.waitUntilDone();
+    mogoMech.set_value(true);
+    IntakeMotor.move(127);
+    ConveyorMotor.move(127);
+    chassis.turnToPoint(-47.29, 64.819, 1500);
+    chassis.moveToPoint(-47.29, 64.918, 2000);
+    chassis.turnToPoint(-66.206, 66.332, 1500,{.forwards=false});
+    chassis.moveToPoint(-66.206, 66.332, 1500,{.forwards=false});
+    mogoMech.set_value(false);
+
+
+
+    // //FIRST MOGO IN CORNER, 5 RINGS SCORED
+
+
+
+
+
+
+
+
+
+
+    /*
+    IntakeMotor.move(127);
+    ConveyorMotor.move(127);
+    chassis.moveToPoint(-26.609, -45.651, 2500);
+    chassis.waitUntilDone();
+    //first ring
+    chassis.turnToPoint(-23.5, -49.938, 2500);
+    chassis.moveToPoint(-23.5, -49.938, 2500);
+    //second ring
+    chassis.turnToPoint(-45, -45, 2500);
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-58, -56, 2500);
+    //third and forth ring
+    chassis.turnToPoint(-45, -60, 1000);
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-45, -60, 1500);
+
+    chassis.turnToPoint(-65, -64, 1000, {.forwards = false});
+    chassis.moveToPoint(-65, -64, 2500, {.forwards=false});
+    */
+    //corner 1
+
+
+
+
+
+}
+
+void (*autonFunctions[])() = {redAuton, blueAuton, skills};
+
+int autonSelect = 1;
+std::string autonNames[5] = {"redAuton", "blueAuton", "skills"};
+
+void previousAuton() {
+  if (autonSelect == 0) {
+    autonSelect = sizeof(autonNames) / sizeof(autonNames[0]) - 1;
+  } else {
+    autonSelect--;
+  }
+  pros::lcd::set_text(0, "Auton Selected = " + autonNames[autonSelect]);
+}
+
+void nextAuton() {
+  if (autonSelect == sizeof(autonNames) / sizeof(autonNames[0]) - 1) {
+    autonSelect = 0;
+  } else {
+    autonSelect++;
+  }
+  pros::lcd::set_text(0, "Auton Selected = " + autonNames[autonSelect]);
+}
