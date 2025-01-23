@@ -7,15 +7,38 @@
 #include "pros/motors.h"
 #include "pros/rtos.hpp"
 #include "../include/subsystems/lb.hpp"
+#include <sys/_intsup.h>
 #include "../include/subsystems/auton.hpp"
 
 
 void redAuton(){
+      mogoMech.set_value(false);
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+    chassis.setPose(-58.135,42.876,120);
+    chassis.moveToPoint(-31.356, -2.648, 1500,{.forwards=false,.maxSpeed=50},false);
+    mogoMech.set_value(true);
+    chassis.turnToHeading(14, 1000,{},false);
+    IntakeMotor.move(127);
+    ConveyorMotor.move(127);
+    chassis.moveToPoint(-25.221, 42.246, 1500,{},false);
+    chassis.turnToHeading(82, 1500,{},false);
+    chassis.moveToPoint(-9.962, 43.759, 1500,{},false);
+    chassis.moveToPoint(-16.262, 43.507, 1500,{.forwards=false},false);
+    chassis.turnToHeading(56.8, 1500,{},false);
+    chassis.moveToPoint(-10.971, 48.173, 1500,{},false);
+    chassis.moveToPoint(-16.262, 43.507, 1500,{.forwards=false},false);
+    chassis.turnToHeading(175.6, 1000);
+    chassis.turnToPoint(-13.493, 13.62, 1500,{},false);
+
+    
 
 }
 
 void redAWP(){
+  
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+          mogoMech.set_value(false);
+
     chassis.setPose(-60,-14,0);
     chassis.moveToPoint(-60, 0, 1000,{},false);
     chassis.turnToHeading(90, 1000,{},false);
@@ -58,6 +81,8 @@ void skills(){
 
     //AGAIN??
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+          mogoMech.set_value(false);
+
     chassis.setPose(-59.637,0,90);
     IntakeMotor.move(127);
     ConveyorMotor.move(127);
