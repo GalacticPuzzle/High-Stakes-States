@@ -5,19 +5,19 @@
 
 
 //left motors
-pros::MotorGroup left_motor_group({-10, 4, -17}, pros::MotorGears::blue);
+pros::MotorGroup left_motor_group({-10, 1, -4}, pros::MotorGears::blue);
 //right motors
-pros::MotorGroup right_motor_group({2, -1, 16}, pros::MotorGears::blue);
+pros::MotorGroup right_motor_group({7, -3, 2}, pros::MotorGears::blue);
 
 //intake motors
-pros::Motor ConveyorMotor(3, pros::v5::MotorGears::blue); 
-pros::Motor IntakeMotor(20, pros::v5::MotorGears::green); 
+pros::Motor ConveyorMotor(21, pros::v5::MotorGears::blue); 
+pros::Motor IntakeMotor(19, pros::v5::MotorGears::green); 
 
 // Lift motor
-pros::Motor arm(20, pros::v5::MotorGears::green);
+pros::Motor arm(18, pros::v5::MotorGears::green);
 
 //Lift rotation
-pros::Rotation arm_sensor(19);
+pros::Rotation arm_sensor(17);
 
 
 // drivetrain settings
@@ -32,10 +32,10 @@ lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
 
 
 // imu  
-pros::Imu imu(18);
+pros::Imu imu(5);
 
 //odom
- pros::Rotation horizontal_sensor(-9);
+ pros::Rotation horizontal_sensor(-8);
 
  lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_275, -4.75);
 

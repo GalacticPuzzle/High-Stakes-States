@@ -3,3 +3,4 @@
 
 
 extern void tankDrive();
+extern void arcadeDrive();

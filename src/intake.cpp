@@ -22,11 +22,11 @@ void Intakerun() {
 
     // Apply intake state to motor
     if (intakeB == 1) {
-        IntakeMotor.move(-127);
-        ConveyorMotor.move(-127);  // Forward
+        IntakeMotor.move(-126);
+        ConveyorMotor.move(-126);  // Forward
     } else if (intakeB == -1) {
-        IntakeMotor.move(127); // Backward
-        ConveyorMotor.move(127);  // Forward
+        IntakeMotor.move(126); // Backward
+        ConveyorMotor.move(126);  // Forward
 
     } else {
         IntakeMotor.move(0);    // Stop

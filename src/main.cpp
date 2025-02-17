@@ -7,13 +7,25 @@
 #include "pros/misc.h"
 #include "pros/rtos.hpp"
 #include "../include/subsystems/lb.hpp"
-#include "../include/subsystems/auton.hpp"
-
 
 
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
+// void armControlTask() {
+//     while (true) {
+//         // Check for controller input to change arm state
+//         if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
+//             nextState(); // Change the target state of the arm
+//         }
+
+//         // Call liftControl to adjust the arm based on the current target
+//         liftControl();
+
+//         // Add a small delay to prevent overwhelming the CPU
+//         pros::delay(10);
+//     }
+// }
 /**
  * A callback function for LLEMU's center button.
  *
@@ -33,16 +45,14 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 
 void initialize() {
-    pros::lcd::initialize(); // initialize brain screen
+	pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate();
-    pros::delay(1000); //give time for imu to calibrate
-    pros::lcd::set_text(0, "Auton Selected = " + autonNames[autonSelect]);
-
-    pros::lcd::register_btn0_cb(previousAuton);
-    pros::lcd::register_btn2_cb(nextAuton);
 
 
     // chassis.calibrate(); // calibrate sensors
+    IntakeMotor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+
 }
 
 /**
@@ -87,107 +97,46 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+    mogoMech.set_value(false);
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+    chassis.setPose(-58.135,42.876,90);
 
-    // JERRY PATH PRAY IT WORKS PLSPLSPLSPLSLSSLPSLS
-    //SKILLS PROG!
-    chassis.setPose(-62, 0,90);
-    IntakeMotor.move(127);
-    ConveyorMotor.move(127);
+    chassis.turnToHeading(300,1500,{},false);
+    chassis.moveToPoint(-25.721, 24.717, 1500,{.forwards=false,.maxSpeed=50},false);
+    chassis.waitUntilDone();
+    pros::delay(500);
+    mogoMech.set_value(true);
     pros::delay(1000);
-    IntakeMotor.move(0);
-    ConveyorMotor.move(0);
-    //Scored on alliance stake
-    chassis.moveToPoint(-47.538,-0.252, 1000);
-    chassis.waitUntilDone();
-    chassis.turnToPoint(-58.8, -19.5, 1000, {.forwards = false});
-    chassis.waitUntilDone();
-    chassis.moveToPoint(-58.8,-19.5, 1500,{.forwards = false, .maxSpeed = 40});
-    chassis.waitUntilDone();
-    mogoMech.set_value(true);
-    chassis.waitUntilDone();
-    pros::delay(750);
-
-    // //Clamped first mogo
-    chassis.turnToPoint(-23, -23.45, 1000);
-     IntakeMotor.move(127);
-    ConveyorMotor.move(127);
-    chassis.moveToPoint(-23, -23.45, 2500, {.maxSpeed = 70});
-    chassis.waitUntilDone();
-    pros::delay(150);
-    //second ring
-    chassis.turnToPoint(-26.356, -50.416, 1000);
-    chassis.moveToPoint(-26.356, -50.416, 2500, {.maxSpeed = 70});
-    chassis.waitUntilDone();
-    pros::delay(150);
-    chassis.turnToPoint(-52.082, -46.6, 1000);
-    chassis.moveToPoint(-52.082, -46.6, 1500);
-    chassis.waitUntilDone();
-    chassis.turnToPoint(-68.4, -46.9, 1000);
-    chassis.moveToPoint(-68.4, -46.9, 1500);
-    chassis.turnToPoint(-44.02 , -64.036, 1000);
-    chassis.moveToPoint(-44.02 , -64.036, 1500);
-    chassis.waitUntilDone();
-    pros::delay(300);
-    IntakeMotor.move(0);
-    ConveyorMotor.move(0);
-    chassis.turnToPoint(-67.954,-64.567,1000,{.forwards=false});
-    chassis.moveToPoint(-67.954, -64.567, 2000,{.forwards=false});
-    mogoMech.set_value(false);
-    // chassis.turnToPoint(-59.397,-59.018, 750);
-    // chassis.moveToPoint(-59.397, -59.018, 500);
-    // chassis.moveToPoint(-67.954, -64.567, 1000,{.forwards=false});
-    chassis.turnToPoint(-47.038, -46.66, 1500);
-    chassis.moveToPoint(-47.038, -46.66, 1500);
-
-    chassis.turnToPoint(-47.29, 23.96, 2500, {.forwards=false});
-    chassis.moveToPoint(-47.29, 23.96, 3500,{.forwards=false, .maxSpeed=60});
-    chassis.waitUntilDone();
-    mogoMech.set_value(true);
+    //chassis.turnToHeading(14, 1000,{},false);
     IntakeMotor.move(127);
     ConveyorMotor.move(127);
-    chassis.turnToPoint(-47.29, 64.819, 1500);
-    chassis.moveToPoint(-47.29, 64.918, 2000);
-    chassis.turnToPoint(-66.206, 66.332, 1500,{.forwards=false});
-    chassis.moveToPoint(-66.206, 66.332, 1500,{.forwards=false});
-    mogoMech.set_value(false);
+
+    pros::delay(1750);
 
 
+    // chassis.turnToPoint(-23.451, 42.372, 1000,{},false);
+    // chassis.waitUntilDone();
+    // pros::delay(500);
+    // chassis.moveToPoint(-23.451, 42.372, 1500,{},false);
+    // chassis.waitUntilDone();
+    // pros::delay(500);
+    IntakeMotor.move(0);
+    ConveyorMotor.move(0);
+    // chassis.moveToPoint(-23.199, 8.071, 1500,{.forwards=false},false);
 
-    // //FIRST MOGO IN CORNER, 5 RINGS SCORED
+    // pros::delay(600);
+    // chassis.turnToHeading(0, 1500,{},false);
+    // chassis.moveToPoint(-25.221, 42.246, 1500,{},false);
+    // chassis.turnToHeading(82, 1500,{},false);
+    // chassis.moveToPoint(-9.962, 43.759, 1500,{},false);
+    // chassis.moveToPoint(-16.262, 43.507, 1500,{.forwards=false},false);
+    // chassis.turnToHeading(56.8, 1500,{},false);
+    // chassis.moveToPoint(-10.971, 48.173, 1500,{},false);
+    // chassis.moveToPoint(-16.262, 43.507, 1500,{.forwards=false},false);
+    // chassis.turnToHeading(175.6, 1000);
+    // chassis.turnToPoint(-13.493, 13.62, 1500,{},false);
 
-
-
-
-
-
-
-
-
-
-    /*
-    IntakeMotor.move(127);
-    ConveyorMotor.move(127);
-    chassis.moveToPoint(-26.609, -45.651, 2500);
-    chassis.waitUntilDone();
-    //first ring
-    chassis.turnToPoint(-23.5, -49.938, 2500);
-    chassis.moveToPoint(-23.5, -49.938, 2500);
-    //second ring
-    chassis.turnToPoint(-45, -45, 2500);
-    chassis.waitUntilDone();
-    chassis.moveToPoint(-58, -56, 2500);
-    //third and forth ring
-    chassis.turnToPoint(-45, -60, 1000);
-    chassis.waitUntilDone();
-    chassis.moveToPoint(-45, -60, 1500);
-
-    chassis.turnToPoint(-65, -64, 1000, {.forwards = false});
-    chassis.moveToPoint(-65, -64, 2500, {.forwards=false});
-    */
-    //corner 1
-
-
-
+    
 
 }
 
@@ -208,6 +157,7 @@ void autonomous() {
 
 
 void opcontrol() {
+    pros::Task armTask(armDriver); 
 	while (true) {
     pros::lcd::print(1, "X:%.1f Y:%.1f T:%.1f", 
                            chassis.getPose().x,
@@ -217,9 +167,11 @@ void opcontrol() {
     Intakerun();
     grab();
 	doink();
-    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP)) {
+    /*if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP)) {
 			nextState();
-		}
+	}*/
+
+    armDriver();
 
     pros::delay(20); 
 	}

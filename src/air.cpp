@@ -12,14 +12,14 @@ pros::adi::DigitalOut doinker('A');
 
 
 void grab(){
-      if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+      if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
         mogoToggle = !mogoToggle;
         mogoMech.set_value(mogoToggle);
   }
 }
 
 void doink(){
-      if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
+      if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
         doinkToggle = !doinkToggle;
         doinker.set_value(doinkToggle);
   }
