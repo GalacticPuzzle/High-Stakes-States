@@ -8,6 +8,7 @@ void liftControl();
 void setArmPosition(int targetDegrees);
 void nextState();
 
+extern pros::Motor arm;
 
 
 

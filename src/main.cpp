@@ -35,7 +35,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 void initialize() {
     pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate();
-    pros::delay(5000); //give time for imu to calibrate
+    pros::delay(1000); //give time for imu to calibrate
     pros::lcd::set_text(0, "Auton Selected = " + autonNames[autonSelect]);
 
     pros::lcd::register_btn0_cb(previousAuton);

@@ -5,16 +5,18 @@
 #include "../include/subsystems/intake.hpp"
 #include "../include/subsystems/air.hpp"
 #include "pros/motors.h"
-#include "pros/rtos.hpp"
+#include "pros/rtos.hpp" 
 #include "../include/subsystems/lb.hpp"
 #include <sys/_intsup.h>
 #include "../include/subsystems/auton.hpp"
 
 
 void redAuton(){
-      mogoMech.set_value(false);
+    mogoMech.set_value(false);
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-    chassis.setPose(-58.135,42.876,120);
+    chassis.setPose(-58.135,42.876,90);
+
+    chassis.turnToHeading(300,1500,{},false);
     chassis.moveToPoint(-31.356, -2.648, 1500,{.forwards=false,.maxSpeed=50},false);
     mogoMech.set_value(true);
     chassis.turnToHeading(14, 1000,{},false);
@@ -71,6 +73,29 @@ void redAWP(){
 }
 
 void blueAuton(){
+  chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+  chassis.setPose(58.64,48.299,58.5);
+  chassis.moveToPoint(30.896, 28.374, 1500, {.forwards=false,.maxSpeed=50},false);
+  chassis.waitUntilDone();
+  mogoMech.set_value(true);
+  pros::delay(300);
+  chassis.turnToHeading(349, 1500,{},false);
+  IntakeMotor.move(127);
+  ConveyorMotor.move(127);
+  chassis.moveToPoint(24.848, 41.742, 1500,{},false);
+  pros::delay(500);
+  chassis.turnToHeading(275.5, 1000,{},false);
+  chassis.moveToPoint(9.715, 42.877, 1500, {},false);
+  pros::delay(500);
+  chassis.moveToPoint(13.372, 42.625, 1500,{.forwards = false},false);
+  chassis.turnToHeading(335.8, 1000,{},false);
+  chassis.moveToPoint(10.724,48.678,1500,{},false);
+  chassis.moveToPoint(13.372, 42.625, 1500,{.forwards=false},false);
+  chassis.turnToHeading(184.4, 1000,{},false);
+  chassis.moveToPoint(11.985, 12.989, 1500,{},false);
+
+
+  
 
 }
 void blueAWP(){
@@ -92,9 +117,11 @@ void skills(){
     //alliance stake
 
     chassis.moveToPoint(-46,0,1000,{},false);
-    chassis.turnToHeading(0, 1000,{},false);
+    chassis.turnToHeading(5, 1000,{},false);
     
     chassis.moveToPoint(-46, -24, 2500, {.forwards=false,.maxSpeed=40},false);
+      chassis.waitUntilDone();
+
     mogoMech.set_value(true);
     pros::delay(300);
 //mogo grabbed
@@ -116,15 +143,19 @@ void skills(){
 
     pros::delay(150);
     mogoMech.set_value(false);
-    chassis.moveToPoint(-65, -65, 1500,{.forwards=false},false);
+    pros::delay(300);
+    chassis.moveToPoint(-65, -65, 1500,{.forwards=false,.maxSpeed=20},false);
     //first mogo corner
 
-    chassis.moveToPoint(-48, -36.7, 2000,{},false);
-    chassis.turnToHeading(180, 1000,{},false);
-    chassis.moveToPoint(-48, 9, 1500,{.forwards=false},false);
-    chassis.moveToPoint(-48,23,1500,{.forwards=false,.maxSpeed=40},false);
+    chassis.moveToPoint(-51.951, -36.823, 2000,{},false);
+    chassis.turnToHeading(210, 1000,{},false);
+    chassis.moveToPoint(-50.186, 9, 1500,{.forwards=false},false);
+    chassis.moveToPoint(-50.186,22.952,1500,{.forwards=false,.maxSpeed=40},false);
+      chassis.waitUntilDone();
+      pros::delay(300);
+
     mogoMech.set_value(true);
-    pros::delay(300);
+    pros::delay(500);
     chassis.turnToHeading(90, 1000,{},false);
     chassis.moveToPoint(-23.683,23.51,1500,{},false);
     chassis.turnToHeading(0,1000,{},false);
@@ -148,6 +179,8 @@ void skills(){
     chassis.moveToPoint(45.292, 28.698, 1500,{},false);
     chassis.turnToHeading(0, 1000,{},false);
     chassis.moveToPoint(45.292, 1.5, 1500,{.forwards=false,.maxSpeed=40},false);
+      chassis.waitUntilDone();
+
     mogoMech.set_value(true);
     IntakeMotor.move(127);
     ConveyorMotor.move(127);
